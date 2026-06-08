@@ -1,5 +1,9 @@
 <h1>My Profile</h1>
 
+<a href="{% url 'edit_profile' %}">
+    Edit Profile
+</a>
+
 <p><strong>Username:</strong> {{ profile.user.username }}</p>
 <p><strong>Role:</strong> {{ profile.user_type }}</p>
 
@@ -14,6 +18,14 @@
     <p>Degree: {{ profile.degree }}</p>
     <p>Skills: {{ profile.skills }}</p>
     <p>Bio: {{ profile.bio }}</p>
+
+    {% if profile.cv %}
+    <p>
+        <a href="{{ profile.cv.url }}" target="_blank">
+            📄 View CV
+        </a>
+    </p>
+{% endif %}
 
 {% else %}
 

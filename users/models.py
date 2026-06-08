@@ -24,6 +24,7 @@ class Profile(models.Model):
     industry = models.CharField(max_length=100, blank=True)
     website = models.URLField(blank=True)
     location = models.CharField(max_length=100, blank=True)
+    cv = models.FileField(upload_to='cvs/', blank=True, null=True)
 
     def __str__(self):
         return self.user.username

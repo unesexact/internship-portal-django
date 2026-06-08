@@ -1,0 +1,95 @@
+<h1>Edit Profile</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if profile.user_type == "student" %}
+
+        <input
+            type="text"
+            name="full_name"
+            placeholder="Full Name"
+            value="{{ profile.full_name }}"
+        >
+
+        <br><br>
+
+        <input
+            type="text"
+            name="university"
+            placeholder="University"
+            value="{{ profile.university }}"
+        >
+
+        <br><br>
+
+        <input
+            type="text"
+            name="degree"
+            placeholder="Degree"
+            value="{{ profile.degree }}"
+        >
+
+        <br><br>
+
+        <textarea
+            name="skills"
+            placeholder="Skills"
+        >{{ profile.skills }}</textarea>
+
+        <br><br>
+
+        <textarea
+            name="bio"
+            placeholder="Bio"
+        >{{ profile.bio }}</textarea>
+
+    {% else %}
+
+        <input
+            type="text"
+            name="company_name"
+            placeholder="Company Name"
+            value="{{ profile.company_name }}"
+        >
+
+        <br><br>
+
+        <input
+            type="text"
+            name="industry"
+            placeholder="Industry"
+            value="{{ profile.industry }}"
+        >
+
+        <br><br>
+
+        <input
+            type="text"
+            name="website"
+            placeholder="Website"
+            value="{{ profile.website }}"
+        >
+
+        <br><br>
+
+        <input
+            type="text"
+            name="location"
+            placeholder="Location"
+            value="{{ profile.location }}"
+        >
+
+    {% endif %}
+
+    <br><br>
+
+    <h3>Upload CV</h3>
+
+<input type="file" name="cv">
+
+    <button type="submit">
+        Save Profile
+    </button>
+
+</form>

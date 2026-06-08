@@ -5,8 +5,16 @@
   <div style="border:1px solid #ddd; padding:10px; margin:10px;">
 
     <h3>{{ app.internship.title }}</h3>
+    <p>
+  <strong>Student:</strong>
+  {{ app.student.profile.full_name|default:app.student.username }}
+</p>
 
-    <p><strong>Student:</strong> {{ app.student.username }}</p>
+<a href="{% url 'public_profile' app.student.id %}">
+  👁 View Profile
+</a>
+
+    
     <p><strong>Location:</strong> {{ app.internship.location }}</p>
 
     <p>

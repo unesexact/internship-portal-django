@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.shortcuts import render, get_object_or_404
 
 from users.forms import RegisterForm
 from .models import Profile
@@ -64,4 +66,47 @@ def user_logout(request):
 def profile(request):
     return render(request, 'users/profile.html', {
         'profile': request.user.profile
+    })
+    
+    
+@login_required
+def edit_profile(request):
+    profile = request.user.profile
+
+    if request.method == "POST":
+
+        # Student fields
+        profile.full_name = request.POST.get("full_name", "")
+        profile.university = request.POST.get("university", "")
+        profile.degree = request.POST.get("degree", "")
+        profile.skills = request.POST.get("skills", "")
+        profile.bio = request.POST.get("bio", "")
+
+        # Company fields
+        profile.company_name = request.POST.get("company_name", "")
+        profile.industry = request.POST.get("industry", "")
+        profile.website = request.POST.get("website", "")
+        profile.location = request.POST.get("location", "")
+        
+        if request.FILES.get("cv"):
+           profile.cv = request.FILES["cv"]
+
+        profile.save()
+
+        return redirect("/users/profile/")
+
+    return render(
+        request,
+        "users/edit_profile.html",
+        {"profile": profile}
+    )
+    
+
+
+def public_profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+
+    return render(request, 'users/public_profile.html', {
+        'profile_user': user,
+        'profile': user.profile
     })
