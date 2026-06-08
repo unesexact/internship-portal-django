@@ -38,6 +38,11 @@ def register(request):
 
 
 def user_login(request):
+
+    # 🔥 IF USER ALREADY LOGGED IN → REDIRECT TO DASHBOARD
+    if request.user.is_authenticated:
+        return redirect('/users/dashboard/')
+
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -46,7 +51,6 @@ def user_login(request):
 
         if user is not None:
             login(request, user)
-
             return redirect("/users/dashboard/")
 
         else:
@@ -55,7 +59,6 @@ def user_login(request):
             })
 
     return render(request, "users/login.html")
-
 
 def user_logout(request):
     logout(request)
