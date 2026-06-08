@@ -1,3 +1,25 @@
 from django.db import models
+from django.contrib.auth.models import User
+from internships.models import Internship
 
-# Create your models here.
+
+class Application(models.Model):
+
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
+    )
+
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name="applications")
+    internship = models.ForeignKey(Internship, on_delete=models.CASCADE, related_name="applications")
+
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('student', 'internship')  # 🚀 prevents duplicates
+
+    def __str__(self):
+        return f"{self.student.username} → {self.internship.title}"

@@ -4,21 +4,18 @@
 
   <div style="border:1px solid #ddd; padding:10px; margin:10px;">
 
-    <!-- TITLE -->
     <h3>
       <a href="{% url 'internship_detail' internship.id %}">
         {{ internship.title }}
       </a>
     </h3>
 
-    <!-- BASIC INFO -->
     <p><strong>Location:</strong> {{ internship.location }}</p>
     <p><strong>Status:</strong> {{ internship.status }}</p>
     <p><strong>Company:</strong> {{ internship.company.username }}</p>
 
     <hr>
 
-    <!-- COMPANY ACTIONS (ONLY OWNER CAN SEE) -->
     {% if user.is_authenticated and internship.company == user %}
 
       <a href="{% url 'edit_internship' internship.id %}">

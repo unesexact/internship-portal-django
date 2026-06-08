@@ -1,12 +1,9 @@
+<h1>Register</h1>
+
 <form method="POST">
-  {% csrf_token %}
-  <input name="username" placeholder="username">
-  <input name="password" type="password">
+    {% csrf_token %}
 
-  <select name="user_type">
-    <option value="student">Student</option>
-    <option value="company">Company</option>
-  </select>
+    {{ form.as_p }}
 
-  <button>Register</button>
+    <button type="submit">Register</button>
 </form>

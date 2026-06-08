@@ -1,0 +1,29 @@
+<h1>My Applications</h1>
+
+{% for app in applications %}
+
+  <div style="border:1px solid #ddd; padding:10px; margin:10px;">
+
+    <h3>{{ app.internship.title }}</h3>
+
+    <p><strong>Company:</strong> {{ app.internship.company.username }}</p>
+    <p><strong>Location:</strong> {{ app.internship.location }}</p>
+
+    <p>
+      <strong>Status:</strong>
+
+      {% if app.status == "pending" %}
+        🟡 Pending
+      {% elif app.status == "accepted" %}
+        🟢 Accepted
+      {% else %}
+        🔴 Rejected
+      {% endif %}
+
+    </p>
+
+  </div>
+
+{% empty %}
+  <p>You have not applied to any internships yet.</p>
+{% endfor %}

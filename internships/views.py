@@ -13,9 +13,6 @@ from .services import (
 )
 
 
-# =========================
-# LIST
-# =========================
 
 def internship_list(request):
 
@@ -40,9 +37,6 @@ def internship_list(request):
     })
 
 
-# =========================
-# DETAIL
-# =========================
 
 def internship_detail(request, internship_id):
     internship = get_object_or_404(Internship, id=internship_id)
@@ -51,9 +45,6 @@ def internship_detail(request, internship_id):
     })
 
 
-# =========================
-# CREATE
-# =========================
 
 @login_required
 def create_internship(request):
@@ -82,9 +73,6 @@ def create_internship(request):
     return render(request, 'internships/create.html')
 
 
-# =========================
-# EDIT
-# =========================
 
 @login_required
 def edit_internship(request, internship_id):
@@ -108,9 +96,6 @@ def edit_internship(request, internship_id):
     })
 
 
-# =========================
-# DELETE
-# =========================
 
 @login_required
 def delete_internship(request, internship_id):
@@ -125,9 +110,6 @@ def delete_internship(request, internship_id):
     return redirect('/internships/')
 
 
-# =========================
-# TOGGLE STATUS
-# =========================
 
 @login_required
 def toggle_status(request, internship_id):

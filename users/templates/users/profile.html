@@ -1,0 +1,27 @@
+<h1>My Profile</h1>
+
+<p><strong>Username:</strong> {{ profile.user.username }}</p>
+<p><strong>Role:</strong> {{ profile.user_type }}</p>
+
+<hr>
+
+{% if profile.user_type == "student" %}
+
+    <h3>Student Profile</h3>
+
+    <p>Full Name: {{ profile.full_name }}</p>
+    <p>University: {{ profile.university }}</p>
+    <p>Degree: {{ profile.degree }}</p>
+    <p>Skills: {{ profile.skills }}</p>
+    <p>Bio: {{ profile.bio }}</p>
+
+{% else %}
+
+    <h3>Company Profile</h3>
+
+    <p>Company Name: {{ profile.company_name }}</p>
+    <p>Industry: {{ profile.industry }}</p>
+    <p>Website: {{ profile.website }}</p>
+    <p>Location: {{ profile.location }}</p>
+
+{% endif %}

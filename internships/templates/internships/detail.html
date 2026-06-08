@@ -8,4 +8,13 @@
 
 <p>{{ internship.description }}</p>
 
+<!-- 🟢 APPLY BUTTON -->
+{% if user.is_authenticated and user.profile.user_type == "student" %}
+    <a href="{% url 'apply' internship.id %}">
+        Apply Now
+    </a>
+{% endif %}
+
+<hr>
+
 <a href="{% url 'internship_list' %}">← Back to list</a>
