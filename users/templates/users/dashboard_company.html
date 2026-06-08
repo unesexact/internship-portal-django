@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="mb-4">
+    <h2>Company Dashboard</h2>
+    <p class="text-muted">Manage internships and review candidates</p>
+</div>
+
+<!-- ACTION CARDS -->
+<div class="row">
+
+    <!-- Create Internship -->
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Create Internship</h5>
+                <p class="card-text">
+                    Post a new internship opportunity for students.
+                </p>
+                <a href="/internships/create/" class="btn btn-primary btn-sm">
+                    Create
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Applications -->
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Applications</h5>
+                <p class="card-text">
+                    Review, accept or reject student applications.
+                </p>
+                <a href="/applications/company/" class="btn btn-success btn-sm">
+                    View
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile -->
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Company Profile</h5>
+                <p class="card-text">
+                    Update company details and information.
+                </p>
+                <a href="/users/profile/" class="btn btn-dark btn-sm">
+                    Open
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<hr class="my-4">
+
+<!-- STATS -->
+<div class="row mb-4">
+
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h5>Total Internships</h5>
+                <h3>{{ total_internships }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h5>Active</h5>
+                <h3>{{ active_internships }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h5>Closed</h5>
+                <h3>{{ closed_internships }}</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<hr>
+
+<!-- COMPANY INTERNSHIPS LIST -->
+<h4>Your Internships</h4>
+
+<div class="row">
+
+    {% for i in internships %}
+
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <h5 class="card-title">{{ i.title }}</h5>
+
+                <p class="card-text">
+                    <strong>Location:</strong> {{ i.location }}
+                </p>
+
+                <p>
+                    {% if i.status == "active" %}
+                        <span class="badge bg-success">Active</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Closed</span>
+                    {% endif %}
+                </p>
+
+                <a href="{% url 'internship_detail' i.id %}" class="btn btn-primary btn-sm">
+                    View
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+    {% empty %}
+        <p class="text-muted">No internships created yet.</p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

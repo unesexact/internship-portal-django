@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 
+from internships.models import Internship
 from users.forms import RegisterForm
 from .models import Profile
 
@@ -16,25 +17,17 @@ def register(request):
         form = RegisterForm(request.POST)
 
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user_type = form.cleaned_data['user_type']
 
-            # 1. create user
-            user = User.objects.create_user(
-                username=username,
-                password=password
-            )
+          user = form.save()
 
-            # 2. set profile type (signal already created profile)
-            user.profile.user_type = user_type
-            user.profile.save()
+          user_type = form.cleaned_data['user_type']
 
-            # 3. AUTO LOGIN (🔥 IMPORTANT PART)
-            login(request, user)
+          user.profile.user_type = user_type
+          user.profile.save()
 
-            # 4. redirect to profile (or home)
-            return redirect('/users/profile/')
+          login(request, user)
+
+          return redirect('/users/profile/')
 
     else:
         form = RegisterForm()
@@ -51,16 +44,22 @@ def user_login(request):
 
         user = authenticate(request, username=username, password=password)
 
-        if user:
+        if user is not None:
             login(request, user)
-            return redirect('/')
 
-    return render(request, 'users/login.html')
+            return redirect("/users/dashboard/")
+
+        else:
+            return render(request, "users/login.html", {
+                "error": "Invalid credentials"
+            })
+
+    return render(request, "users/login.html")
 
 
 def user_logout(request):
     logout(request)
-    return redirect('/')
+    return redirect('/users/login/')
 
 @login_required
 def profile(request):
@@ -109,4 +108,25 @@ def public_profile(request, user_id):
     return render(request, 'users/public_profile.html', {
         'profile_user': user,
         'profile': user.profile
+    })
+    
+@login_required
+def dashboard(request):
+    profile = request.user.profile
+
+    if profile.user_type == "student":
+        return render(request, "users/dashboard_student.html")
+
+    # COMPANY DASHBOARD DATA
+    company_internships = Internship.objects.filter(company=request.user)
+
+    total_internships = company_internships.count()
+    active_internships = company_internships.filter(status="active").count()
+    closed_internships = company_internships.filter(status="closed").count()
+
+    return render(request, "users/dashboard_company.html", {
+        "internships": company_internships,
+        "total_internships": total_internships,
+        "active_internships": active_internships,
+        "closed_internships": closed_internships,
     })

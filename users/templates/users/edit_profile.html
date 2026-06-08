@@ -1,95 +1,94 @@
-<h1>Edit Profile</h1>
+{% extends "base.html" %}
 
-<form method="POST" enctype="multipart/form-data">
+{% block content %}
+
+<h2 class="mb-4">Edit Profile</h2>
+
+<form method="POST" enctype="multipart/form-data" class="card p-4 shadow-sm">
     {% csrf_token %}
 
     {% if profile.user_type == "student" %}
 
-        <input
-            type="text"
-            name="full_name"
-            placeholder="Full Name"
-            value="{{ profile.full_name }}"
-        >
+        <h5 class="mb-3">Student Information</h5>
 
-        <br><br>
+        <div class="mb-3">
+            <input class="form-control" type="text" name="full_name"
+                   placeholder="Full Name" value="{{ profile.full_name }}">
+        </div>
 
-        <input
-            type="text"
-            name="university"
-            placeholder="University"
-            value="{{ profile.university }}"
-        >
+        <div class="mb-3">
+            <input class="form-control" type="text" name="university"
+                   placeholder="University" value="{{ profile.university }}">
+        </div>
 
-        <br><br>
+        <div class="mb-3">
+            <input class="form-control" type="text" name="degree"
+                   placeholder="Degree" value="{{ profile.degree }}">
+        </div>
 
-        <input
-            type="text"
-            name="degree"
-            placeholder="Degree"
-            value="{{ profile.degree }}"
-        >
+        <div class="mb-3">
+            <textarea class="form-control" name="skills"
+                      placeholder="Skills">{{ profile.skills }}</textarea>
+        </div>
 
-        <br><br>
+        <div class="mb-3">
+            <textarea class="form-control" name="bio"
+                      placeholder="Bio">{{ profile.bio }}</textarea>
+        </div>
 
-        <textarea
-            name="skills"
-            placeholder="Skills"
-        >{{ profile.skills }}</textarea>
+        <h5 class="mb-2">CV Upload</h5>
 
-        <br><br>
+    <div class="mb-3">
+        <input class="form-control" type="file" name="cv">
+    </div>
 
-        <textarea
-            name="bio"
-            placeholder="Bio"
-        >{{ profile.bio }}</textarea>
+    {% if profile.cv %}
+        <p>
+            Current CV:
+            <a href="{{ profile.cv.url }}" target="_blank">
+                📄 View
+            </a>
+        </p>
+    {% endif %}
 
     {% else %}
 
-        <input
-            type="text"
-            name="company_name"
-            placeholder="Company Name"
-            value="{{ profile.company_name }}"
-        >
+        <h5 class="mb-3">Company Information</h5>
 
-        <br><br>
+        <div class="mb-3">
+            <input class="form-control" type="text" name="company_name"
+                   placeholder="Company Name" value="{{ profile.company_name }}">
+        </div>
 
-        <input
-            type="text"
-            name="industry"
-            placeholder="Industry"
-            value="{{ profile.industry }}"
-        >
+        <div class="mb-3">
+            <input class="form-control" type="text" name="industry"
+                   placeholder="Industry" value="{{ profile.industry }}">
+        </div>
 
-        <br><br>
+        <div class="mb-3">
+            <input class="form-control" type="text" name="website"
+                   placeholder="Website" value="{{ profile.website }}">
+        </div>
 
-        <input
-            type="text"
-            name="website"
-            placeholder="Website"
-            value="{{ profile.website }}"
-        >
-
-        <br><br>
-
-        <input
-            type="text"
-            name="location"
-            placeholder="Location"
-            value="{{ profile.location }}"
-        >
+        <div class="mb-3">
+            <input class="form-control" type="text" name="location"
+                   placeholder="Location" value="{{ profile.location }}">
+        </div>
 
     {% endif %}
 
-    <br><br>
+    <hr>
 
-    <h3>Upload CV</h3>
 
-<input type="file" name="cv">
 
-    <button type="submit">
+    <button type="submit" class="btn btn-success">
         Save Profile
     </button>
 
+    <a href="/users/profile/" class="btn btn-secondary">
+        Cancel
+    </a>
+
 </form>
+
+{% endblock %}

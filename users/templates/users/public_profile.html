@@ -1,22 +1,40 @@
-<h1>Student Profile</h1>
+{% extends "base.html" %}
 
-<p><strong>Username:</strong> {{ profile_user.username }}</p>
-<p><strong>Full Name:</strong> {{ profile.full_name }}</p>
-<p><strong>University:</strong> {{ profile.university }}</p>
-<p><strong>Degree:</strong> {{ profile.degree }}</p>
-<p><strong>Skills:</strong> {{ profile.skills }}</p>
-<p><strong>Bio:</strong> {{ profile.bio }}</p>
+{% block content %}
 
-{% if profile.cv %}
-    <p>
-        <a href="{{ profile.cv.url }}" target="_blank">
+<div class="mb-4">
+    <h2>Student Profile</h2>
+    <a href="javascript:history.back()" class="btn btn-sm btn-secondary">
+        ← Back
+    </a>
+</div>
+
+<div class="card shadow-sm p-4">
+
+    <h4 class="mb-3">{{ profile.full_name|default:profile_user.username }}</h4>
+
+    <p><strong>Username:</strong> {{ profile_user.username }}</p>
+    <p><strong>University:</strong> {{ profile.university }}</p>
+    <p><strong>Degree:</strong> {{ profile.degree }}</p>
+    <p><strong>Skills:</strong> {{ profile.skills }}</p>
+
+    <hr>
+
+    <h5>About</h5>
+    <p>{{ profile.bio }}</p>
+
+    <hr>
+
+    <h5>CV</h5>
+
+    {% if profile.cv %}
+        <a href="{{ profile.cv.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
             📄 View CV
         </a>
-    </p>
-{% else %}
-    <p>No CV uploaded</p>
-{% endif %}
+    {% else %}
+        <p class="text-muted">No CV uploaded</p>
+    {% endif %}
 
-<br>
+</div>
 
-<a href="javascript:history.back()">← Back</a>
+{% endblock %}

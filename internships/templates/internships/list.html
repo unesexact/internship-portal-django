@@ -1,44 +1,47 @@
-<h1>Internships</h1>
+{% extends "base.html" %}
 
-{% for internship in internships %}
+{% block content %}
 
-  <div style="border:1px solid #ddd; padding:10px; margin:10px;">
+<h2 class="mb-4">Internships</h2>
 
-    <h3>
-      <a href="{% url 'internship_detail' internship.id %}">
-        {{ internship.title }}
-      </a>
-    </h3>
+<div class="row">
 
-    <p><strong>Location:</strong> {{ internship.location }}</p>
-    <p><strong>Status:</strong> {{ internship.status }}</p>
-    <p><strong>Company:</strong> {{ internship.company.username }}</p>
+  {% for i in internships %}
 
-    <hr>
+  <div class="col-md-4 mb-3">
+    <div class="card shadow-sm h-100">
 
-    {% if user.is_authenticated and internship.company == user %}
+      <div class="card-body">
 
-      <a href="{% url 'edit_internship' internship.id %}">
-        ✏️ Edit
-      </a>
+        <h5 class="card-title">{{ i.title }}</h5>
 
-      |
+        <p class="card-text">
+          <strong>Location:</strong> {{ i.location }}
+        </p>
 
-      <a href="{% url 'delete_internship' internship.id %}"
-         onclick="return confirm('Are you sure?')">
-        🗑 Delete
-      </a>
+        <p class="card-text">
+          <strong>Company:</strong> {{ i.company.username }}
+        </p>
 
-      |
+        <p>
+          {% if i.status == "active" %}
+            <span class="badge bg-success">Active</span>
+          {% else %}
+            <span class="badge bg-secondary">Closed</span>
+          {% endif %}
+        </p>
 
-      <a href="{% url 'toggle_status' internship.id %}">
-        🔄 Toggle Status
-      </a>
+        <a href="{% url 'internship_detail' i.id %}" class="btn btn-primary btn-sm">
+          View Details
+        </a>
 
-    {% endif %}
+      </div>
 
+    </div>
   </div>
 
-{% empty %}
-  <p>No internships available.</p>
-{% endfor %}
+  {% endfor %}
+
+</div>
+
+{% endblock %}
