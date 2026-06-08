@@ -1,0 +1,11 @@
+<h1>{{ internship.title }}</h1>
+
+<p><strong>Company:</strong> {{ internship.company.username }}</p>
+<p><strong>Location:</strong> {{ internship.location }}</p>
+<p><strong>Status:</strong> {{ internship.status }}</p>
+
+<hr>
+
+<p>{{ internship.description }}</p>
+
+<a href="{% url 'internship_list' %}">← Back to list</a>

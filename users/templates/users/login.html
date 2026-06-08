@@ -1,10 +1,6 @@
-<h1>Login Page</h1>
-
 <form method="POST">
-    {% csrf_token %}
-
-    <input type="text" name="username" placeholder="Username">
-    <input type="password" name="password" placeholder="Password">
-
-    <button type="submit">Login</button>
+  {% csrf_token %}
+  <input name="username">
+  <input name="password" type="password">
+  <button>Login</button>
 </form>

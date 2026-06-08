@@ -1,0 +1,11 @@
+<h1>Edit Internship</h1>
+
+<form method="POST">
+  {% csrf_token %}
+
+  <input name="title" value="{{ internship.title }}"><br>
+  <input name="location" value="{{ internship.location }}"><br>
+  <textarea name="description">{{ internship.description }}</textarea><br>
+
+  <button>Save</button>
+</form>

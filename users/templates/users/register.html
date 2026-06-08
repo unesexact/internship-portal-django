@@ -1,14 +1,12 @@
-<h1>Register Page</h1>
-
 <form method="POST">
-    {% csrf_token %}
-    <input type="text" name="username" placeholder="Username">
-    <input type="password" name="password" placeholder="Password">
+  {% csrf_token %}
+  <input name="username" placeholder="username">
+  <input name="password" type="password">
 
-    <select name="user_type">
-        <option value="student">Student</option>
-        <option value="company">Company</option>
-    </select>
+  <select name="user_type">
+    <option value="student">Student</option>
+    <option value="company">Company</option>
+  </select>
 
-    <button type="submit">Register</button>
+  <button>Register</button>
 </form>
