@@ -108,6 +108,9 @@ def edit_profile(request):
 def public_profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
+    if user.profile.user_type != "student":
+        return redirect("dashboard")
+
     return render(request, 'users/public_profile.html', {
         'profile_user': user,
         'profile': user.profile

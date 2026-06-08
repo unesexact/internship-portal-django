@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="mb-4">
-    <h2>Student Profile</h2>
+    <h2>{{ profile.full_name|default:profile_user.username }}'s Profile</h2>
     <a href="javascript:history.back()" class="btn btn-sm btn-secondary">
         ← Back
     </a>
