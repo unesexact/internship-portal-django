@@ -2,7 +2,35 @@
 
 <h2 class="mb-4">Edit Profile</h2>
 
+<hr />
+
 <form method="POST" enctype="multipart/form-data" class="card p-4 shadow-sm">
+  <h5 class="mb-3">Profile Picture</h5>
+
+  {% if profile.profile_picture %}
+
+  <div class="mb-3">
+    <img
+      src="{{ profile.profile_picture.url }}"
+      class="rounded-circle border"
+      width="120"
+      height="120"
+      style="object-fit: cover"
+    />
+  </div>
+
+  <label class="form-check mb-3">
+    <input type="checkbox" class="form-check-input" name="remove_picture" />
+    Remove current picture
+  </label>
+
+  {% endif %}
+
+  <div class="mb-3">
+    <input type="file" name="profile_picture" class="form-control" />
+  </div>
+
+  <hr />
   {% csrf_token %} {% if profile.user_type == "student" %}
 
   <h5 class="mb-3">Student Information</h5>

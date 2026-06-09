@@ -22,8 +22,19 @@
         </a>
 
         <!-- PROFILE -->
-        <a class="btn btn-outline-light btn-sm" href="{% url 'profile' %}">
-          Profile
+        <a
+          class="btn btn-outline-light btn-sm d-flex align-items-center gap-2"
+          href="{% url 'profile' %}"
+        >
+          {% if user.profile.profile_picture %}
+          <img
+            src="{{ user.profile.profile_picture.url }}"
+            width="24"
+            height="24"
+            class="rounded-circle"
+            style="object-fit: cover"
+          />
+          {% endif %} Profile
         </a>
 
         <!-- ROLE BADGE (nice UX improvement) -->

@@ -25,5 +25,9 @@ class Profile(models.Model):
     location = models.CharField(max_length=100, blank=True)
     cv = models.FileField(upload_to="cvs/", blank=True, null=True)
 
+    profile_picture = models.ImageField(
+        upload_to="profile_pictures/", blank=True, null=True
+    )
+
     def __str__(self):
         return self.user.username

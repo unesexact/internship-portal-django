@@ -1,15 +1,12 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.contrib import messages
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 
 from internships.models import Internship
 from users.forms import RegisterForm
-from .models import Profile
 
 
 def register(request):
@@ -90,6 +87,15 @@ def edit_profile(request):
 
         if request.FILES.get("cv"):
             profile.cv = request.FILES["cv"]
+
+        # Upload / replace profile picture
+        if request.FILES.get("profile_picture"):
+            profile.profile_picture = request.FILES["profile_picture"]
+
+        if request.POST.get("remove_picture"):
+            if profile.profile_picture:
+                profile.profile_picture.delete(save=False)
+            profile.profile_picture = None
 
         profile.save()
         messages.success(request, "Profile updated successfully!")
