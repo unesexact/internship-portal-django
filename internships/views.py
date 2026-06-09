@@ -49,7 +49,6 @@ def internship_detail(request, internship_id):
 @login_required
 def create_internship(request):
 
-    # check role safely
     if not hasattr(request.user, 'profile'):
         return redirect('/')
 
@@ -105,7 +104,9 @@ def delete_internship(request, internship_id):
     if internship.company != request.user:
         return redirect('/')
 
-    remove_internship(internship)
+    if request.method == "POST":
+        remove_internship(internship)
+        return redirect('/internships/')
 
     return redirect('/internships/')
 

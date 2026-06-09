@@ -65,10 +65,13 @@
         ✏ Edit
     </a>
 
-    <a href="{% url 'delete_internship' internship.id %}" class="btn btn-danger btn-sm"
-       onclick="return confirm('Are you sure you want to delete this internship?');">
+    <form action="{% url 'delete_internship' internship.id %}" method="POST" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger btn-sm"
+            onclick="return confirm('Are you sure?');">
         🗑 Delete
-    </a>
+    </button>
+</form>
 
     <a href="{% url 'toggle_status' internship.id %}" class="btn btn-secondary btn-sm">
         🔄 Toggle Status
