@@ -18,37 +18,34 @@ def register(request):
         form = RegisterForm(request.POST)
 
         if form.is_valid():
+            user = form.save()
 
-          user = form.save()
+            user_type = form.cleaned_data["user_type"]
 
-          user_type = form.cleaned_data['user_type']
+            user.profile.user_type = user_type
+            user.profile.save()
 
-          user.profile.user_type = user_type
-          user.profile.save()
+            login(request, user)
+            messages.success(request, "Welcome! Your account was created.")
 
-          login(request, user)
-          messages.success(request, "Welcome! Your account was created.")
-
-          return redirect('/users/profile/')
+            return redirect("/users/profile/")
 
     else:
         form = RegisterForm()
 
-    return render(request, 'users/register.html', {
-        'form': form
-    })
+    return render(request, "users/register.html", {"form": form})
 
 
 def user_login(request):
 
     if request.user.is_authenticated:
-        return redirect('/users/dashboard/')
+        return redirect("/users/dashboard/")
 
     error = None
 
     if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST["username"]
+        password = request.POST["password"]
 
         user = authenticate(request, username=username, password=password)
 
@@ -59,28 +56,25 @@ def user_login(request):
         else:
             error = "Invalid username or password"
 
-    return render(request, "users/login.html", {
-        "error": error
-    })
+    return render(request, "users/login.html", {"error": error})
+
 
 def user_logout(request):
     logout(request)
     messages.info(request, "You have been logged out.")
-    return redirect('/users/login/')
+    return redirect("/users/login/")
+
 
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html', {
-        'profile': request.user.profile
-    })
-    
-    
+    return render(request, "users/profile.html", {"profile": request.user.profile})
+
+
 @login_required
 def edit_profile(request):
     profile = request.user.profile
 
     if request.method == "POST":
-
         # Student fields
         profile.full_name = request.POST.get("full_name", "")
         profile.university = request.POST.get("university", "")
@@ -93,20 +87,15 @@ def edit_profile(request):
         profile.industry = request.POST.get("industry", "")
         profile.website = request.POST.get("website", "")
         profile.location = request.POST.get("location", "")
-        
+
         if request.FILES.get("cv"):
-           profile.cv = request.FILES["cv"]
+            profile.cv = request.FILES["cv"]
 
         profile.save()
         messages.success(request, "Profile updated successfully!")
         return redirect("/users/profile/")
 
-    return render(
-        request,
-        "users/edit_profile.html",
-        {"profile": profile}
-    )
-    
+    return render(request, "users/edit_profile.html", {"profile": profile})
 
 
 def public_profile(request, user_id):
@@ -115,11 +104,13 @@ def public_profile(request, user_id):
     if user.profile.user_type != "student":
         return redirect("dashboard")
 
-    return render(request, 'users/public_profile.html', {
-        'profile_user': user,
-        'profile': user.profile
-    })
-    
+    return render(
+        request,
+        "users/public_profile.html",
+        {"profile_user": user, "profile": user.profile},
+    )
+
+
 @login_required
 def dashboard(request):
     profile = request.user.profile
@@ -134,9 +125,13 @@ def dashboard(request):
     active_internships = company_internships.filter(status="active").count()
     closed_internships = company_internships.filter(status="closed").count()
 
-    return render(request, "users/dashboard_company.html", {
-        "internships": company_internships,
-        "total_internships": total_internships,
-        "active_internships": active_internships,
-        "closed_internships": closed_internships,
-    })
+    return render(
+        request,
+        "users/dashboard_company.html",
+        {
+            "internships": company_internships,
+            "total_internships": total_internships,
+            "active_internships": active_internships,
+            "closed_internships": closed_internships,
+        },
+    )

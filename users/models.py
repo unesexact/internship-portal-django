@@ -3,10 +3,9 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
-
     USER_TYPES = (
-        ('student', 'Student'),
-        ('company', 'Company'),
+        ("student", "Student"),
+        ("company", "Company"),
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
@@ -24,7 +23,7 @@ class Profile(models.Model):
     industry = models.CharField(max_length=100, blank=True)
     website = models.URLField(blank=True)
     location = models.CharField(max_length=100, blank=True)
-    cv = models.FileField(upload_to='cvs/', blank=True, null=True)
+    cv = models.FileField(upload_to="cvs/", blank=True, null=True)
 
     def __str__(self):
         return self.user.username

@@ -1,49 +1,39 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
 <div class="mb-4">
-    <h2>My Applications</h2>
+  <h2>My Applications</h2>
 </div>
 
 {% for app in applications %}
 
-    <div class="card shadow-sm p-3 mb-3">
+<div class="card shadow-sm p-3 mb-3">
+  <!-- JOB TITLE -->
+  <h5 class="mb-2">{{ app.internship.title }}</h5>
 
-        <!-- JOB TITLE -->
-        <h5 class="mb-2">{{ app.internship.title }}</h5>
+  <!-- COMPANY -->
+  <p class="mb-1">
+    <strong>Company:</strong> {{ app.internship.company.username }}
+  </p>
 
-        <!-- COMPANY -->
-        <p class="mb-1">
-            <strong>Company:</strong> {{ app.internship.company.username }}
-        </p>
+  <!-- LOCATION -->
+  <p class="mb-2"><strong>Location:</strong> {{ app.internship.location }}</p>
 
-        <!-- LOCATION -->
-        <p class="mb-2">
-            <strong>Location:</strong> {{ app.internship.location }}
-        </p>
+  <!-- STATUS -->
+  <p>
+    <strong>Status:</strong>
 
-        <!-- STATUS -->
-        <p>
-            <strong>Status:</strong>
-
-            {% if app.status == "pending" %}
-                <span class="badge bg-warning text-dark">Pending</span>
-            {% elif app.status == "accepted" %}
-                <span class="badge bg-success">Accepted</span>
-            {% else %}
-                <span class="badge bg-danger">Rejected</span>
-            {% endif %}
-        </p>
-
-    </div>
+    {% if app.status == "pending" %}
+    <span class="badge bg-warning text-dark">Pending</span>
+    {% elif app.status == "accepted" %}
+    <span class="badge bg-success">Accepted</span>
+    {% else %}
+    <span class="badge bg-danger">Rejected</span>
+    {% endif %}
+  </p>
+</div>
 
 {% empty %}
 
-    <div class="alert alert-info">
-        You have not applied to any internships yet.
-    </div>
+<div class="alert alert-info">You have not applied to any internships yet.</div>
 
-{% endfor %}
-
-{% endblock %}
+{% endfor %} {% endblock %}

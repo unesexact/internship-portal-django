@@ -1,9 +1,8 @@
 from .models import Internship
 
 
-
 def get_student_internships():
-    return Internship.objects.filter(status='active')
+    return Internship.objects.filter(status="active")
 
 
 def get_company_internships(user):
@@ -11,16 +10,12 @@ def get_company_internships(user):
 
 
 def get_public_internships():
-    return Internship.objects.filter(status='active')
-
+    return Internship.objects.filter(status="active")
 
 
 def create_internship(user, title, location, description):
     return Internship.objects.create(
-        title=title,
-        location=location,
-        description=description,
-        company=user
+        title=title, location=location, description=description, company=user
     )
 
 
@@ -37,9 +32,9 @@ def remove_internship(internship):
 
 
 def toggle_internship_status(internship):
-    if internship.status == 'active':
-        internship.status = 'closed'
+    if internship.status == "active":
+        internship.status = "closed"
     else:
-        internship.status = 'active'
+        internship.status = "active"
     internship.save()
     return internship

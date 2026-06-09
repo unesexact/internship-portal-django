@@ -1,114 +1,101 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
 <div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow-sm p-4 mt-4">
+      <!-- TITLE -->
+      <h2 class="mb-2">{{ internship.title }}</h2>
 
-    <div class="col-md-8">
+      <!-- META INFO -->
+      <p class="mb-1">
+        <strong>Company:</strong> {{ internship.company.username }}
+      </p>
 
-        <div class="card shadow-sm p-4 mt-4">
+      <p class="mb-1"><strong>Location:</strong> {{ internship.location }}</p>
 
-            <!-- TITLE -->
-            <h2 class="mb-2">{{ internship.title }}</h2>
+      <p class="mb-3">
+        <strong>Status:</strong>
 
-            <!-- META INFO -->
-            <p class="mb-1">
-                <strong>Company:</strong> {{ internship.company.username }}
-            </p>
-
-            <p class="mb-1">
-                <strong>Location:</strong> {{ internship.location }}
-            </p>
-
-            <p class="mb-3">
-                <strong>Status:</strong>
-
-                {% if internship.status == "active" %}
-                    <span class="badge bg-success">Active</span>
-                {% else %}
-                    <span class="badge bg-secondary">Closed</span>
-                {% endif %}
-            </p>
-
-            <hr>
-
-            <!-- DESCRIPTION -->
-            <h5>Description</h5>
-            <p>{{ internship.description }}</p>
-
-            <hr>
-
-            <!-- APPLY SECTION -->
-{% if user.is_authenticated and user.profile.user_type == "student" %}
-
-    {% if internship.status == "active" %}
-
-        {% if already_applied %}
-
-            <button class="btn btn-secondary" disabled>
-                ✅ Already Applied
-            </button>
-
+        {% if internship.status == "active" %}
+        <span class="badge bg-success">Active</span>
         {% else %}
-
-            <a href="{% url 'apply' internship.id %}" class="btn btn-success">
-                🚀 Apply Now
-            </a>
-
+        <span class="badge bg-secondary">Closed</span>
         {% endif %}
+      </p>
 
-    {% else %}
+      <hr />
 
-        <button class="btn btn-secondary" disabled>
-            Applications Closed
-        </button>
+      <!-- DESCRIPTION -->
+      <h5>Description</h5>
+      <p>{{ internship.description }}</p>
 
-    {% endif %}
+      <hr />
 
-{% endif %}
+      <!-- APPLY SECTION -->
+      {% if user.is_authenticated and user.profile.user_type == "student" %} {%
+      if internship.status == "active" %} {% if already_applied %}
 
-            {% if user.is_authenticated and user.profile.user_type == "company" and internship.company == user %}
+      <button class="btn btn-secondary" disabled>✅ Already Applied</button>
 
-    <hr>
+      {% else %}
 
-    <div class="d-flex justify-content-center gap-2 flex-wrap">
+      <a href="{% url 'apply' internship.id %}" class="btn btn-success">
+        🚀 Apply Now
+      </a>
 
-    <a href="{% url 'edit_internship' internship.id %}"
-       class="btn btn-warning btn-sm">
-        ✏ Edit
-    </a>
+      {% endif %} {% else %}
 
-    <form action="{% url 'delete_internship' internship.id %}"
+      <button class="btn btn-secondary" disabled>Applications Closed</button>
+
+      {% endif %} {% endif %} {% if user.is_authenticated and
+      user.profile.user_type == "company" and internship.company == user %}
+
+      <hr />
+
+      <div class="d-flex justify-content-center gap-2 flex-wrap">
+        <a
+          href="{% url 'edit_internship' internship.id %}"
+          class="btn btn-warning btn-sm"
+        >
+          ✏ Edit
+        </a>
+
+        <form
+          action="{% url 'delete_internship' internship.id %}"
           method="POST"
-          class="d-inline">
-        {% csrf_token %}
-        <button type="submit"
-                class="btn btn-danger btn-sm"
-                onclick="return confirm('Are you sure?');">
+          class="d-inline"
+        >
+          {% csrf_token %}
+          <button
+            type="submit"
+            class="btn btn-danger btn-sm"
+            onclick="return confirm('Are you sure?');"
+          >
             🗑 Delete
-        </button>
-    </form>
+          </button>
+        </form>
 
-    <a href="{% url 'toggle_status' internship.id %}"
-       class="btn btn-secondary btn-sm">
-        🔄 Toggle Status
-    </a>
+        <a
+          href="{% url 'toggle_status' internship.id %}"
+          class="btn btn-secondary btn-sm"
+        >
+          🔄 Toggle Status
+        </a>
+      </div>
 
-</div>
+      {% endif %}
 
-{% endif %}
+      <hr />
 
-            <hr>
-
-            <!-- BACK -->
-            <a href="{% url 'internship_list' %}" class="btn btn-outline-secondary btn-sm">
-                ← Back to list
-            </a>
-
-        </div>
-
+      <!-- BACK -->
+      <a
+        href="{% url 'internship_list' %}"
+        class="btn btn-outline-secondary btn-sm"
+      >
+        ← Back to list
+      </a>
     </div>
-
+  </div>
 </div>
 
 {% endblock %}

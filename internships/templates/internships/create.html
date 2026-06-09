@@ -1,50 +1,51 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
 <div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="card shadow-sm p-4 mt-4">
+      <h3 class="mb-4">Create Internship</h3>
 
-    <div class="col-md-7">
+      <form method="POST">
+        {% csrf_token %}
 
-        <div class="card shadow-sm p-4 mt-4">
-
-            <h3 class="mb-4">Create Internship</h3>
-
-            <form method="POST">
-                {% csrf_token %}
-
-                <div class="mb-3">
-                    <label class="form-label">Title</label>
-                    <input class="form-control" name="title" placeholder="e.g. Python Developer Intern">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Location</label>
-                    <input class="form-control" name="location" placeholder="e.g. Remote / Paris / Zurich">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <textarea class="form-control" name="description" rows="5"
-                              placeholder="Describe the internship..."></textarea>
-                </div>
-
-                <button type="submit" class="btn btn-primary w-100">
-                    Create Internship
-                </button>
-
-            </form>
-
-            <div class="mt-3 text-center">
-                <a href="{% url 'internship_list' %}">
-                    ← Back to internships
-                </a>
-            </div>
-
+        <div class="mb-3">
+          <label class="form-label">Title</label>
+          <input
+            class="form-control"
+            name="title"
+            placeholder="e.g. Python Developer Intern"
+          />
         </div>
 
-    </div>
+        <div class="mb-3">
+          <label class="form-label">Location</label>
+          <input
+            class="form-control"
+            name="location"
+            placeholder="e.g. Remote / Paris / Zurich"
+          />
+        </div>
 
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea
+            class="form-control"
+            name="description"
+            rows="5"
+            placeholder="Describe the internship..."
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+          Create Internship
+        </button>
+      </form>
+
+      <div class="mt-3 text-center">
+        <a href="{% url 'internship_list' %}"> ← Back to internships </a>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

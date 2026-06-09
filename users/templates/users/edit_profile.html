@@ -1,100 +1,130 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
 <h2 class="mb-4">Edit Profile</h2>
 
 <form method="POST" enctype="multipart/form-data" class="card p-4 shadow-sm">
-    {% csrf_token %}
+  {% csrf_token %} {% if profile.user_type == "student" %}
 
-    {% if profile.user_type == "student" %}
+  <h5 class="mb-3">Student Information</h5>
 
-        <h5 class="mb-3">Student Information</h5>
+  <div class="mb-3">
+    <input
+      class="form-control"
+      type="text"
+      name="full_name"
+      placeholder="Full Name"
+      value="{{ profile.full_name }}"
+    />
+  </div>
 
-        <div class="mb-3">
-            <input class="form-control" type="text" name="full_name"
-                   placeholder="Full Name" value="{{ profile.full_name }}">
-        </div>
+  <div class="mb-3">
+    <input
+      class="form-control"
+      type="text"
+      name="university"
+      placeholder="University"
+      value="{{ profile.university }}"
+    />
+  </div>
 
-        <div class="mb-3">
-            <input class="form-control" type="text" name="university"
-                   placeholder="University" value="{{ profile.university }}">
-        </div>
+  <div class="mb-3">
+    <input
+      class="form-control"
+      type="text"
+      name="degree"
+      placeholder="Degree"
+      value="{{ profile.degree }}"
+    />
+  </div>
 
-        <div class="mb-3">
-            <input class="form-control" type="text" name="degree"
-                   placeholder="Degree" value="{{ profile.degree }}">
-        </div>
+  <div class="mb-3">
+    <textarea class="form-control" name="skills" placeholder="Skills">
+{{ profile.skills }}</textarea
+    >
+  </div>
 
-        <div class="mb-3">
-            <textarea class="form-control" name="skills"
-                      placeholder="Skills">{{ profile.skills }}</textarea>
-        </div>
+  <div class="mb-3">
+    <textarea class="form-control" name="bio" placeholder="Bio">
+{{ profile.bio }}</textarea
+    >
+  </div>
 
-        <div class="mb-3">
-            <textarea class="form-control" name="bio"
-                      placeholder="Bio">{{ profile.bio }}</textarea>
-        </div>
+  <hr />
 
-        <hr>
+  <h5 class="mb-2">CV Upload</h5>
 
-        <h5 class="mb-2">CV Upload</h5>
+  {% if profile.cv %}
 
-        {% if profile.cv %}
-
-            <p>
-                Current CV:
-                <a href="{{ profile.cv.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
-                    📄 View CV
-                </a>
-            </p>
-
-            <p class="text-muted">
-                Upload a new file to replace the current CV:
-            </p>
-
-        {% endif %}
-
-        <div class="mb-3">
-            <input class="form-control" type="file" name="cv">
-        </div>
-
-    {% else %}
-
-        <h5 class="mb-3">Company Information</h5>
-
-        <div class="mb-3">
-            <input class="form-control" type="text" name="company_name"
-                   placeholder="Company Name" value="{{ profile.company_name }}">
-        </div>
-
-        <div class="mb-3">
-            <input class="form-control" type="text" name="industry"
-                   placeholder="Industry" value="{{ profile.industry }}">
-        </div>
-
-        <div class="mb-3">
-            <input class="form-control" type="text" name="website"
-                   placeholder="Website" value="{{ profile.website }}">
-        </div>
-
-        <div class="mb-3">
-            <input class="form-control" type="text" name="location"
-                   placeholder="Location" value="{{ profile.location }}">
-        </div>
-
-    {% endif %}
-
-    <hr>
-
-    <button type="submit" class="btn btn-success">
-        Save Profile
-    </button>
-
-    <a href="/users/profile/" class="btn btn-secondary">
-        Cancel
+  <p>
+    Current CV:
+    <a
+      href="{{ profile.cv.url }}"
+      target="_blank"
+      class="btn btn-outline-primary btn-sm"
+    >
+      📄 View CV
     </a>
+  </p>
 
+  <p class="text-muted">Upload a new file to replace the current CV:</p>
+
+  {% endif %}
+
+  <div class="mb-3">
+    <input class="form-control" type="file" name="cv" />
+  </div>
+
+  {% else %}
+
+  <h5 class="mb-3">Company Information</h5>
+
+  <div class="mb-3">
+    <input
+      class="form-control"
+      type="text"
+      name="company_name"
+      placeholder="Company Name"
+      value="{{ profile.company_name }}"
+    />
+  </div>
+
+  <div class="mb-3">
+    <input
+      class="form-control"
+      type="text"
+      name="industry"
+      placeholder="Industry"
+      value="{{ profile.industry }}"
+    />
+  </div>
+
+  <div class="mb-3">
+    <input
+      class="form-control"
+      type="text"
+      name="website"
+      placeholder="Website"
+      value="{{ profile.website }}"
+    />
+  </div>
+
+  <div class="mb-3">
+    <input
+      class="form-control"
+      type="text"
+      name="location"
+      placeholder="Location"
+      value="{{ profile.location }}"
+    />
+  </div>
+
+  {% endif %}
+
+  <hr />
+
+  <button type="submit" class="btn btn-success">Save Profile</button>
+
+  <a href="/users/profile/" class="btn btn-secondary"> Cancel </a>
 </form>
 
 {% endblock %}

@@ -1,58 +1,42 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
 <div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm p-4 mt-5">
+      <h3 class="mb-4 text-center">Create Account</h3>
 
-    <div class="col-md-6">
+      <form method="POST">
+        {% csrf_token %} {{ form.non_field_errors }} {{ form.errors }}
 
-        <div class="card shadow-sm p-4 mt-5">
-
-            <h3 class="mb-4 text-center">Create Account</h3>
-
-            <form method="POST">
-                {% csrf_token %}
-
-                {{ form.non_field_errors }}
-                {{ form.errors }}
-
-                <div class="mb-3">
-                    {{ form.username.label_tag }}
-                    {{ form.username }}
-                </div>
-
-                <div class="mb-3">
-                    {{ form.password1.label_tag }}
-                    {{ form.password1 }}
-                </div>
-
-                <div class="mb-3">
-                    {{ form.password2.label_tag }}
-                    {{ form.password2 }}
-                </div>
-
-                <div class="mb-3">
-                    {{ form.user_type.label_tag }}
-                    {{ form.user_type }}
-                </div>
-
-                <button type="submit" class="btn btn-success w-100">
-                    Create Account
-                </button>
-
-            </form>
-
-            <hr>
-
-            <p class="text-center">
-                Already have an account?
-                <a href="/users/login/">Login</a>
-            </p>
-
+        <div class="mb-3">
+          {{ form.username.label_tag }} {{ form.username }}
         </div>
 
-    </div>
+        <div class="mb-3">
+          {{ form.password1.label_tag }} {{ form.password1 }}
+        </div>
 
+        <div class="mb-3">
+          {{ form.password2.label_tag }} {{ form.password2 }}
+        </div>
+
+        <div class="mb-3">
+          {{ form.user_type.label_tag }} {{ form.user_type }}
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">
+          Create Account
+        </button>
+      </form>
+
+      <hr />
+
+      <p class="text-center">
+        Already have an account?
+        <a href="/users/login/">Login</a>
+      </p>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
