@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import Internship
 from .services import (
@@ -66,7 +67,7 @@ def create_internship(request):
             description=description,
             company=request.user
         )
-
+        messages.success(request, "Internship created successfully!")
         return redirect('/internships/')
 
     return render(request, 'internships/create.html')
@@ -88,6 +89,7 @@ def edit_internship(request, internship_id):
             request.POST['location'],
             request.POST['description']
         )
+        messages.success(request, "Internship updated successfully!")
         return redirect('/internships/')
 
     return render(request, 'internships/edit.html', {
@@ -106,6 +108,7 @@ def delete_internship(request, internship_id):
 
     if request.method == "POST":
         remove_internship(internship)
+        messages.success(request, "Internship deleted successfully!")
         return redirect('/internships/')
 
     return redirect('/internships/')
@@ -121,5 +124,5 @@ def toggle_status(request, internship_id):
         return redirect('/')
 
     toggle_internship_status(internship)
-
+    messages.success(request, "Internship deleted successfully!")
     return redirect('/internships/')

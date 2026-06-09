@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
 
 from internships.models import Internship
@@ -26,6 +27,7 @@ def register(request):
           user.profile.save()
 
           login(request, user)
+          messages.success(request, "Welcome! Your account was created.")
 
           return redirect('/users/profile/')
 
@@ -51,6 +53,7 @@ def user_login(request):
 
         if user is not None:
             login(request, user)
+            messages.success(request, "Logged in successfully!")
             return redirect("/users/dashboard/")
 
         else:
@@ -62,6 +65,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
+    messages.info(request, "You have been logged out.")
     return redirect('/users/login/')
 
 @login_required
@@ -94,7 +98,7 @@ def edit_profile(request):
            profile.cv = request.FILES["cv"]
 
         profile.save()
-
+        messages.success(request, "Profile updated successfully!")
         return redirect("/users/profile/")
 
     return render(

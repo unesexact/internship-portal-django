@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import Application
 from internships.models import Internship
@@ -17,6 +18,11 @@ def apply_internship(request, internship_id):
 
     if not created:
         pass
+    
+    if created:
+        messages.success(request, "Application submitted successfully!")
+    else:
+        messages.info(request, "You already applied to this internship.")
 
     return redirect('/internships/')
 
@@ -54,5 +60,7 @@ def update_application(request, app_id, status):
     if status in ['accepted', 'rejected']:
         application.status = status
         application.save()
+    
+    messages.success(request, f"Application {status} successfully!")
 
     return redirect('/applications/company/')
