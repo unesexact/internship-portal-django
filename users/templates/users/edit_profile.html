@@ -36,20 +36,28 @@
                       placeholder="Bio">{{ profile.bio }}</textarea>
         </div>
 
+        <hr>
+
         <h5 class="mb-2">CV Upload</h5>
 
-    <div class="mb-3">
-        <input class="form-control" type="file" name="cv">
-    </div>
+        {% if profile.cv %}
 
-    {% if profile.cv %}
-        <p>
-            Current CV:
-            <a href="{{ profile.cv.url }}" target="_blank">
-                📄 View
-            </a>
-        </p>
-    {% endif %}
+            <p>
+                Current CV:
+                <a href="{{ profile.cv.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                    📄 View CV
+                </a>
+            </p>
+
+            <p class="text-muted">
+                Upload a new file to replace the current CV:
+            </p>
+
+        {% endif %}
+
+        <div class="mb-3">
+            <input class="form-control" type="file" name="cv">
+        </div>
 
     {% else %}
 
@@ -78,8 +86,6 @@
     {% endif %}
 
     <hr>
-
-
 
     <button type="submit" class="btn btn-success">
         Save Profile
