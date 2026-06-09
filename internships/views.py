@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+from applications.models import Application
+
 from .models import Internship
 from .services import (
     get_student_internships,
@@ -41,8 +43,19 @@ def internship_list(request):
 
 def internship_detail(request, internship_id):
     internship = get_object_or_404(Internship, id=internship_id)
+
+    already_applied = False
+
+    if request.user.is_authenticated and hasattr(request.user, "profile"):
+        if request.user.profile.user_type == "student":
+            already_applied = Application.objects.filter(
+                student=request.user,
+                internship=internship
+            ).exists()
+
     return render(request, 'internships/detail.html', {
-        'internship': internship
+        'internship': internship,
+        'already_applied': already_applied
     })
 
 
