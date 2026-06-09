@@ -10,6 +10,12 @@
 
             <h3 class="mb-4 text-center">Login</h3>
 
+            {% if error %}
+<div class="alert alert-danger">
+    {{ error }}
+</div>
+{% endif %}
+
             <form method="POST">
                 {% csrf_token %}
 

@@ -41,9 +41,10 @@ def register(request):
 
 def user_login(request):
 
-    # 🔥 IF USER ALREADY LOGGED IN → REDIRECT TO DASHBOARD
     if request.user.is_authenticated:
         return redirect('/users/dashboard/')
+
+    error = None
 
     if request.method == "POST":
         username = request.POST['username']
@@ -55,13 +56,12 @@ def user_login(request):
             login(request, user)
             messages.success(request, "Logged in successfully!")
             return redirect("/users/dashboard/")
-
         else:
-            return render(request, "users/login.html", {
-                "error": "Invalid credentials"
-            })
+            error = "Invalid username or password"
 
-    return render(request, "users/login.html")
+    return render(request, "users/login.html", {
+        "error": error
+    })
 
 def user_logout(request):
     logout(request)
