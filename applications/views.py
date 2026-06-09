@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .models import Application
+from .models import Application, Notification
 from internships.models import Internship
 
 
@@ -21,10 +21,19 @@ def apply_internship(request, internship_id):
     
     if created:
         messages.success(request, "Application submitted successfully!")
+        Notification.objects.create(
+        user=internship.company,
+        message=f"New application received for {internship.title}"
+    )
     else:
         messages.info(request, "You already applied to this internship.")
+        
 
     return redirect('/internships/')
+    
+
+
+
 
 
 @login_required
@@ -60,7 +69,22 @@ def update_application(request, app_id, status):
     if status in ['accepted', 'rejected']:
         application.status = status
         application.save()
+
+        Notification.objects.create(
+        user=application.student,
+        message=f"Your application for {application.internship.title} was {status}"
+    )
     
     messages.success(request, f"Application {status} successfully!")
 
     return redirect('/applications/company/')
+
+
+@login_required
+def mark_notifications_read(request):
+    Notification.objects.filter(
+        user=request.user,
+        is_read=False
+    ).update(is_read=True)
+
+    return redirect(request.META.get('HTTP_REFERER', '/'))

@@ -34,6 +34,41 @@
                 <span class="badge bg-warning text-dark">Company</span>
             {% endif %}
 
+
+            {% if user.is_authenticated %}
+
+<div class="dropdown">
+
+    <button id="notifBtn"
+            class="btn btn-outline-light btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown">
+
+        🔔 {{ notifications_count }}
+
+    </button>
+
+    <ul class="dropdown-menu dropdown-menu-end">
+
+        {% for n in notifications %}
+            <li>
+                <span class="dropdown-item small">
+                    {{ n.message }}
+                </span>
+            </li>
+        {% empty %}
+            <li>
+                <span class="dropdown-item text-muted">
+                    No notifications
+                </span>
+            </li>
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+{% endif %}
+
             <!-- LOGOUT -->
             <a class="btn btn-danger btn-sm"
                href="{% url 'logout' %}">
@@ -73,6 +108,29 @@
     {% block content %}
     {% endblock %}
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const btn = document.getElementById("notifBtn");
+
+    if (btn) {
+        btn.addEventListener("click", function () {
+
+            fetch("{% url 'mark_notifications_read' %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                }
+            });
+
+            // instant UI update (no reload needed)
+            btn.innerHTML = "🔔 0";
+        });
+    }
+
+});
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
