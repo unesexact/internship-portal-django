@@ -10,11 +10,13 @@ def apply_internship(request, internship_id):
 
     internship = get_object_or_404(Internship, id=internship_id)
 
-    # prevent duplicate applications
-    Application.objects.get_or_create(
+    application, created = Application.objects.get_or_create(
         student=request.user,
         internship=internship
     )
+
+    if not created:
+        pass
 
     return redirect('/internships/')
 
