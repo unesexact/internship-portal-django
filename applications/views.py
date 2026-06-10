@@ -43,12 +43,20 @@ def my_applications(request):
 @login_required
 def company_applications(request):
 
+    status = request.GET.get("status", "all")
+
     applications = Application.objects.filter(internship__company=request.user)
+
+    if status != "all":
+        applications = applications.filter(status=status)
 
     return render(
         request,
         "applications/company_applications.html",
-        {"applications": applications},
+        {
+            "applications": applications,
+            "current_status": status,
+        },
     )
 
 

@@ -2,6 +2,37 @@
 
 <div class="mb-4">
   <h2>Applications (Company Dashboard)</h2>
+  <div class="mb-4">
+    <div class="btn-group">
+      <a
+        href="?status=all"
+        class="btn {% if current_status == 'all' %}btn-dark{% else %}btn-outline-dark{% endif %}"
+      >
+        All
+      </a>
+
+      <a
+        href="?status=pending"
+        class="btn {% if current_status == 'pending' %}btn-warning{% else %}btn-outline-warning{% endif %}"
+      >
+        Pending
+      </a>
+
+      <a
+        href="?status=accepted"
+        class="btn {% if current_status == 'accepted' %}btn-success{% else %}btn-outline-success{% endif %}"
+      >
+        Accepted
+      </a>
+
+      <a
+        href="?status=rejected"
+        class="btn {% if current_status == 'rejected' %}btn-danger{% else %}btn-outline-danger{% endif %}"
+      >
+        Rejected
+      </a>
+    </div>
+  </div>
 </div>
 
 {% for app in applications %}
