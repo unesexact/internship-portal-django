@@ -5,20 +5,15 @@
 </div>
 
 {% for app in applications %}
-
 <div class="card shadow-sm p-3 mb-3">
-  <!-- JOB TITLE -->
   <h5 class="mb-2">{{ app.internship.title }}</h5>
 
-  <!-- COMPANY -->
   <p class="mb-1">
     <strong>Company:</strong> {{ app.internship.company.username }}
   </p>
 
-  <!-- LOCATION -->
   <p class="mb-2"><strong>Location:</strong> {{ app.internship.location }}</p>
 
-  <!-- STATUS -->
   <p>
     <strong>Status:</strong>
 
@@ -31,9 +26,6 @@
     {% endif %}
   </p>
 </div>
-
 {% empty %}
-
 <div class="alert alert-info">You have not applied to any internships yet.</div>
-
 {% endfor %} {% endblock %}

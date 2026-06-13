@@ -8,7 +8,6 @@
   <h5 class="mb-3">Profile Picture</h5>
 
   {% if profile.profile_picture %}
-
   <div class="mb-3">
     <img
       src="{{ profile.profile_picture.url }}"
@@ -23,7 +22,6 @@
     <input type="checkbox" class="form-check-input" name="remove_picture" />
     Remove current picture
   </label>
-
   {% endif %}
 
   <div class="mb-3">
@@ -78,11 +76,9 @@
   </div>
 
   <hr />
-
   <h5 class="mb-2">CV Upload</h5>
 
   {% if profile.cv %}
-
   <p>
     Current CV:
     <a
@@ -93,9 +89,7 @@
       📄 View CV
     </a>
   </p>
-
   <p class="text-muted">Upload a new file to replace the current CV:</p>
-
   {% endif %}
 
   <div class="mb-3">
@@ -145,14 +139,11 @@
       value="{{ profile.location }}"
     />
   </div>
-
   {% endif %}
 
   <hr />
-
   <button type="submit" class="btn btn-success">Save Profile</button>
-
-  <a href="/users/profile/" class="btn btn-secondary"> Cancel </a>
+  <a href="/users/profile/" class="btn btn-secondary">Cancel</a>
 </form>
 
 {% endblock %}

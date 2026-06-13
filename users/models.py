@@ -11,14 +11,12 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     user_type = models.CharField(max_length=10, choices=USER_TYPES)
 
-    # ===== STUDENT FIELDS =====
     full_name = models.CharField(max_length=100, blank=True)
     university = models.CharField(max_length=100, blank=True)
     degree = models.CharField(max_length=100, blank=True)
     skills = models.TextField(blank=True)
     bio = models.TextField(blank=True)
 
-    # ===== COMPANY FIELDS =====
     company_name = models.CharField(max_length=100, blank=True)
     industry = models.CharField(max_length=100, blank=True)
     website = models.URLField(blank=True)

@@ -1,30 +1,25 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.shortcuts import get_object_or_404
 
 from internships.models import Internship
 from users.forms import RegisterForm
 
 
 def register(request):
-
     if request.method == "POST":
         form = RegisterForm(request.POST)
 
         if form.is_valid():
             user = form.save()
-
             user_type = form.cleaned_data["user_type"]
-
             user.profile.user_type = user_type
             user.profile.save()
 
             login(request, user)
             messages.success(request, "Welcome! Your account was created.")
-
             return redirect("/users/profile/")
 
     else:
@@ -34,7 +29,6 @@ def register(request):
 
 
 def user_login(request):
-
     if request.user.is_authenticated:
         return redirect("/users/dashboard/")
 
@@ -72,14 +66,12 @@ def edit_profile(request):
     profile = request.user.profile
 
     if request.method == "POST":
-        # Student fields
         profile.full_name = request.POST.get("full_name", "")
         profile.university = request.POST.get("university", "")
         profile.degree = request.POST.get("degree", "")
         profile.skills = request.POST.get("skills", "")
         profile.bio = request.POST.get("bio", "")
 
-        # Company fields
         profile.company_name = request.POST.get("company_name", "")
         profile.industry = request.POST.get("industry", "")
         profile.website = request.POST.get("website", "")
@@ -88,7 +80,6 @@ def edit_profile(request):
         if request.FILES.get("cv"):
             profile.cv = request.FILES["cv"]
 
-        # Upload / replace profile picture
         if request.FILES.get("profile_picture"):
             profile.profile_picture = request.FILES["profile_picture"]
 
@@ -124,9 +115,7 @@ def dashboard(request):
     if profile.user_type == "student":
         return render(request, "users/dashboard_student.html")
 
-    # COMPANY DASHBOARD DATA
     company_internships = Internship.objects.filter(company=request.user)
-
     total_internships = company_internships.count()
     active_internships = company_internships.filter(status="active").count()
     closed_internships = company_internships.filter(status="closed").count()

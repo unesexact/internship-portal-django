@@ -11,15 +11,14 @@
       style="object-fit: cover"
     />
     {% endif %}
-
     <div>
       <h2 class="mb-0">My Profile</h2>
-      <small class="text-muted"> {{ profile.user.username }} </small>
+      <small class="text-muted">{{ profile.user.username }}</small>
     </div>
   </div>
-  <a href="{% url 'edit_profile' %}" class="btn btn-sm btn-primary">
-    Edit Profile
-  </a>
+  <a href="{% url 'edit_profile' %}" class="btn btn-sm btn-primary"
+    >Edit Profile</a
+  >
 </div>
 
 <div class="card shadow-sm p-4">
@@ -29,9 +28,7 @@
   <hr />
 
   {% if profile.user_type == "student" %}
-
   <h4 class="mb-3">Student Profile</h4>
-
   <p>
     <strong>Full Name:</strong> {{ profile.full_name|default:"Not provided" }}
   </p>
@@ -43,23 +40,18 @@
   <p><strong>Bio:</strong> {{ profile.bio|default:"Not provided" }}</p>
 
   <hr />
-
   <h5>CV</h5>
-
   {% if profile.cv %}
   <a
     href="{{ profile.cv.url }}"
     target="_blank"
     class="btn btn-outline-primary btn-sm"
+    >📄 View CV</a
   >
-    📄 View CV
-  </a>
   {% else %}
   <p class="text-muted">Not provided</p>
   {% endif %} {% else %}
-
   <h4 class="mb-3">Company Profile</h4>
-
   <p>
     <strong>Company Name:</strong> {{ profile.company_name|default:"Not
     provided" }}
@@ -71,7 +63,6 @@
   <p>
     <strong>Location:</strong> {{ profile.location|default:"Not provided" }}
   </p>
-
   {% endif %}
 </div>
 

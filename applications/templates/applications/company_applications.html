@@ -35,64 +35,64 @@
   </div>
 </div>
 
-{% for app in applications %}
+<div class="row">
+  {% for app in applications %}
+  <div class="col-md-6 mb-3">
+    <div class="card shadow-sm p-3 h-100">
+      <h5 class="mb-2">{{ app.internship.title }}</h5>
 
-<div class="card shadow-sm p-3 mb-3">
-  <!-- INTERN TITLE -->
-  <h5 class="mb-2">{{ app.internship.title }}</h5>
+      <p class="mb-1">
+        <strong>Student:</strong>
+        {{ app.student.profile.full_name|default:app.student.username }}
+      </p>
 
-  <!-- STUDENT INFO -->
-  <p class="mb-1">
-    <strong>Student:</strong>
-    {{ app.student.profile.full_name|default:app.student.username }}
-  </p>
+      <a
+        href="{% url 'public_profile' app.student.id %}"
+        class="btn btn-sm btn-outline-primary mb-2"
+      >
+        View Profile
+      </a>
 
-  <!-- VIEW PROFILE -->
-  <a
-    href="{% url 'public_profile' app.student.id %}"
-    class="btn btn-sm btn-outline-primary mb-2"
-  >
-    👁 View Profile
-  </a>
+      <p class="mb-1">
+        <strong>Location:</strong> {{ app.internship.location }}
+      </p>
 
-  <!-- LOCATION -->
-  <p class="mb-1"><strong>Location:</strong> {{ app.internship.location }}</p>
+      <p class="mb-2">
+        <strong>Status:</strong>
 
-  <!-- STATUS -->
-  <p class="mb-2">
-    <strong>Status:</strong>
+        {% if app.status == "pending" %}
+        <span class="badge bg-warning text-dark">Pending</span>
+        {% elif app.status == "accepted" %}
+        <span class="badge bg-success">Accepted</span>
+        {% else %}
+        <span class="badge bg-danger">Rejected</span>
+        {% endif %}
+      </p>
 
-    {% if app.status == "pending" %}
-    <span class="badge bg-warning text-dark">Pending</span>
-    {% elif app.status == "accepted" %}
-    <span class="badge bg-success">Accepted</span>
-    {% else %}
-    <span class="badge bg-danger">Rejected</span>
-    {% endif %}
-  </p>
+      {% if app.status == "pending" %}
+      <div class="d-flex gap-2">
+        <a
+          href="{% url 'update_application' app.id 'accepted' %}"
+          class="btn btn-success btn-sm"
+        >
+          Accept
+        </a>
 
-  <!-- ACTIONS -->
-  {% if app.status == "pending" %}
-
-  <a
-    href="{% url 'update_application' app.id 'accepted' %}"
-    class="btn btn-success btn-sm"
-  >
-    ✅ Accept
-  </a>
-
-  <a
-    href="{% url 'update_application' app.id 'rejected' %}"
-    class="btn btn-danger btn-sm"
-  >
-    ❌ Reject
-  </a>
-
-  {% endif %}
+        <a
+          href="{% url 'update_application' app.id 'rejected' %}"
+          class="btn btn-danger btn-sm"
+        >
+          Reject
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12">
+    <div class="alert alert-info">No applications received yet.</div>
+  </div>
+  {% endfor %}
 </div>
 
-{% empty %}
-
-<div class="alert alert-info">No applications received yet.</div>
-
-{% endfor %} {% endblock %}
+{% endblock %}

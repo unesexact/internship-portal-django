@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from applications.models import Application
-
 from .models import Internship
 from .services import (
     get_student_internships,
@@ -17,19 +16,15 @@ from .services import (
 
 
 def internship_list(request):
-
     if request.user.is_authenticated and hasattr(request.user, "profile"):
         role = request.user.profile.user_type
 
         if role == "student":
             internships = get_student_internships()
-
         elif role == "company":
             internships = get_company_internships(request.user)
-
         else:
             internships = get_public_internships()
-
     else:
         internships = get_public_internships()
 
@@ -38,7 +33,6 @@ def internship_list(request):
 
 def internship_detail(request, internship_id):
     internship = get_object_or_404(Internship, id=internship_id)
-
     already_applied = False
 
     if request.user.is_authenticated and hasattr(request.user, "profile"):
@@ -56,7 +50,6 @@ def internship_detail(request, internship_id):
 
 @login_required
 def create_internship(request):
-
     if not hasattr(request.user, "profile"):
         return redirect("/")
 
@@ -82,7 +75,6 @@ def create_internship(request):
 
 @login_required
 def edit_internship(request, internship_id):
-
     internship = get_object_or_404(Internship, id=internship_id)
 
     if internship.company != request.user:
@@ -103,7 +95,6 @@ def edit_internship(request, internship_id):
 
 @login_required
 def delete_internship(request, internship_id):
-
     internship = get_object_or_404(Internship, id=internship_id)
 
     if internship.company != request.user:
@@ -119,12 +110,11 @@ def delete_internship(request, internship_id):
 
 @login_required
 def toggle_status(request, internship_id):
-
     internship = get_object_or_404(Internship, id=internship_id)
 
     if internship.company != request.user:
         return redirect("/")
 
     toggle_internship_status(internship)
-    messages.success(request, "Internship deleted successfully!")
+    messages.success(request, "Internship status updated successfully!")
     return redirect("/internships/")
