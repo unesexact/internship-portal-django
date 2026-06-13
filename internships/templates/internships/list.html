@@ -14,46 +14,6 @@
         <p class="card-text">
           <strong>Company:</strong> {{ i.company.username }}
         </p>
-{% extends "base.html" %} {% block content %}
-
-<h2 class="mb-4">Internships</h2>
-
-<div class="row">
-  {% for i in internships %}
-
-  <div class="col-md-4 mb-3">
-    <div class="card shadow-sm h-100">
-      <div class="card-body">
-        <h5 class="card-title">{{ i.title }}</h5>
-
-        <p class="card-text"><strong>Location:</strong> {{ i.location }}</p>
-
-        <p class="card-text">
-          <strong>Company:</strong> {{ i.company.username }}
-        </p>
-
-        <p>
-          {% if i.status == "active" %}
-          <span class="badge bg-success">Active</span>
-          {% else %}
-          <span class="badge bg-secondary">Closed</span>
-          {% endif %}
-        </p>
-
-        <a
-          href="{% url 'internship_detail' i.id %}"
-          class="btn btn-primary btn-sm"
-        >
-          View Details
-        </a>
-      </div>
-    </div>
-  </div>
-
-  {% endfor %}
-</div>
-
-{% endblock %}
 
         <p>
           {% if i.status == "active" %}
